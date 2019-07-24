@@ -27,6 +27,7 @@ import com.epam.ta.reportportal.ws.model.attribute.ItemAttributesRQ;
 import com.epam.ta.reportportal.ws.model.launch.StartLaunchRQ;
 import com.epam.ta.reportportal.ws.model.log.SaveLogRQ;
 import io.reactivex.Maybe;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.extension.*;
 
 import java.lang.reflect.Method;
@@ -72,6 +73,11 @@ public class ReportPortalExtension
 			skippedIssueAttr.setValue(skippedAnIssue == null ? "true" : skippedAnIssue.toString());
 			skippedIssueAttr.setSystem(true);
 			rq.getAttributes().add(skippedIssueAttr);
+
+			rq.setRerun(params.isRerun());
+			if (StringUtils.isNotEmpty(params.getRerunOf())) {
+				rq.setRerunOf(params.getRerunOf());
+			}
 
 			Launch launch = rp.newLaunch(rq);
 			launchMap.put(launchId, launch);

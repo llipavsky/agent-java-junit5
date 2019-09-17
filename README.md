@@ -9,6 +9,9 @@
 # ReportPortal [JUnit5](https://junit.org/junit5/) Integration
 
 The repository contains [JUnit5 Extension](https://junit.org/junit5/docs/current/user-guide/#extensions) for [ReportPortal](http://reportportal.io/) integration.
+This repository also contains YSoft patches for delayed reporting so ti does not interfere with jGiven exception magic
+
+
 
 ## Getting Started
 
@@ -404,7 +407,7 @@ In Intellij IDEA go to *Run* -> *Edit Configurations* -> click on "+" sign -> se
 
 Enter the name of the run, select classes and/or methods to be executed in this configuration and add the following line into *VM Options* field:
 ```shell
--Djunit.jupiter.extensions.autodetection.enabled=true
+-Djunit.jupiter.extensions.autodetection.enabled=true -Dcom.epam.reportportal.junit5.DelayTestProcessing=true
 ```
 
 When you are done adding local run configuration, simply go to *Run* -> *Run <test_run_name>* and that test run results should be sent to Report Portal
@@ -417,6 +420,7 @@ Add `junit-platform.properties` file to your `resources` folder and add the foll
 
 ```shell
 junit.jupiter.extensions.autodetection.enabled=true
+com.epam.reportportal.junit5.DelayTestProcessing=true
 ```
 
 ![JUnit 5 platform properties file](integration_manual_files/note_junit5_properties.png)
@@ -435,6 +439,7 @@ Assuming that you have the gradle project setup, add/edit your `test` task in `g
 test {
     testLogging.showStandardStreams = true
     useJUnitPlatform()
+    systemProperty "com.epam.reportportal.junit5.DelayTestProcessing", true  // false to standard processing
     systemProperty 'junit.jupiter.extensions.autodetection.enabled', true
 }
 ```
@@ -467,6 +472,7 @@ dependencies {
 test {
     testLogging.showStandardStreams = true
     useJUnitPlatform()
+    systemProperty "com.epam.reportportal.junit5.DelayTestProcessing", true
     systemProperty 'junit.jupiter.extensions.autodetection.enabled', true
 }
 ```

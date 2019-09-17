@@ -7,7 +7,7 @@ apply from: 'release.gradle'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-description = 'JUnit5 Agent'
+description = 'JUnit5 Agent with with YSoft patches for optional delayed processing'
 
 repositories {
     jcenter()
